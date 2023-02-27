@@ -8,7 +8,7 @@ export default function App() {
     <View style={styles.container}>
       <StatusBar style='light' />
 
-      <Header style={styles.header} />
+      <Header />
 
       <View styles={styles.housesContainer}>
         <House style={styles.house} />
@@ -21,12 +21,9 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
+    backgroundColor: '#fafafa',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  header: {
-    flex: 1,
   },
   housesContainer: {
     flex: 2,
