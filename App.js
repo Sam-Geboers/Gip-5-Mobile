@@ -8,7 +8,7 @@ export default function App() {
     <View style={styles.container}>
       <StatusBar style='light' />
 
-      <Header />
+      <Header styles={styles.header} />
 
       <View styles={styles.housesContainer}>
         <House style={styles.house} />
@@ -21,19 +21,16 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     backgroundColor: '#fafafa',
-    alignItems: 'center',
-    justifyContent: 'center',
+    margin: 0,
+    padding: 0,
   },
   housesContainer: {
-    flex: 2,
+    alignItems: 'center',
     flexDirection: 'row',
-    alignItems: 'flex-start',
+    flexWrap: 'wrap',
     justifyContent: 'space-evenly',
     backgroundColor: '#fafafa',
   },
-  house: {
-    flex: 1,
-    aspectRatio: 1,
-  }
 });

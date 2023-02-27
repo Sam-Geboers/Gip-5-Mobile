@@ -14,10 +14,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#354F52',
     alignItems: 'center',
     justifyContent: 'center',
-    minHeight: '25%',
-    minWidth: '50%',
+    flexBasis: 100,
     margin: 10,
-    borderRadius: '25%'
+    borderRadius: '25',
   },
   title: {
     color: '#fafafa',

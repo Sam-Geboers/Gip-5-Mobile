@@ -10,7 +10,6 @@ export default function Header() {
 
 const styles = StyleSheet.create({
   header: {
-    flex: 2,
     backgroundColor: '#2F3E46',
     minHeight: '15%',
     minWidth: '100%',
