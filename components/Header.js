@@ -2,10 +2,10 @@ import { StyleSheet, Text, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 
-export default function Header() {
+export default function Header(props) {
   return (
     <View style={styles.header}>
-      <Text style={styles.user}>Welcome back, User!</Text>
+      <Text style={styles.user}>Welcome back, {props.username}!</Text>
       <FontAwesomeIcon style={styles.ellipsis} icon={ faBars } />
     </View>
   );

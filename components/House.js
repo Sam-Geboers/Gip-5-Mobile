@@ -1,11 +1,11 @@
 import { StyleSheet, Text, View } from 'react-native';
 
-export default function House() {
+export default function House(props) {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>House</Text>
-      <Text style={styles.description}>Different types of houses</Text>
-    </View>
+      <View style={styles.container}>
+        <Text style={styles.title}>{props.name}</Text>
+        <Text style={styles.description}>Different types of houses</Text>
+      </View>
   );
 }
 
