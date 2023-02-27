@@ -11,7 +11,7 @@ export default function House() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#354F52',
+    backgroundColor: '#1B263B',
     alignItems: 'center',
     justifyContent: 'center',
     flexBasis: 100,
