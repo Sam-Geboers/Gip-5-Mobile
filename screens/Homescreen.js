@@ -1,19 +1,27 @@
 import { StatusBar } from 'expo-status-bar';
-import { Button, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Button, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Header from '../components/Header';
 import House from '../components/House';
 
-export default function Homescreen({ navigation }) {
+export default function HomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <StatusBar style='light' />
 
-      <Header />
+      <Header username='Dylan'/>
 
       <View style={styles.housesContainer}>
-        <House style={styles.house} onPress={() => navigation.navigate("house")} />
-        <House style={styles.house} />
-        <House style={styles.house} />
+        <TouchableOpacity onPress={() => navigation.navigate('House')}>
+          <House style={styles.house} name='House 1'/>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => navigation.navigate('House')}>
+          <House style={styles.house} name='House 2'/>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => navigation.navigate('House')}>
+          <House style={styles.house} name='House 3'/>
+        </TouchableOpacity>
       </View>
 
       <Pressable style={styles.addHouseBtn}>
