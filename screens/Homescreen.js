@@ -1,32 +1,42 @@
+import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { Button, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, StyleSheet, Text, TouchableOpacity, View, Alert } from 'react-native';
 import Header from '../components/Header';
 import House from '../components/House';
 
-export default function HomeScreen({ navigation }) {
+export default function HomeScreen({ route, navigation }) {
+  const [houseContainer, setHouseContainer] = React.useState([]);
+
+  function addHouse(name, adr) {
+    if (name.length == 0 || adr == 0) {
+      Alert.alert('Please enter your house information before pressing submit.')
+      return;
+    }
+
+    let id = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+
+    setHouseContainer((currentHouseContainer) => [...currentHouseContainer, {id, name, adr}]);
+  }
+
   return (
     <View style={styles.container}>
+      {/* HEADER */}
       <StatusBar style='light' />
-
       <Header username='Dylan'/>
 
-      <View style={styles.housesContainer}>
-        <TouchableOpacity onPress={() => navigation.navigate('House')}>
-          <House style={styles.house} name='House 1'/>
-        </TouchableOpacity>
+      {/* LIST OF ALL HOUSES */}
+      <FlatList style={styles.housesContainer} data={houseContainer} renderItem={(house) => {
+        return <TouchableOpacity onPress={() => navigation.navigate('House', {houseId: house.item.id, houseName: house.item.name, houseAdr: house.item.adr})}>
+                  <House key={house.item.id} name={house.item.name} adr={house.item.adr}/>
+                </TouchableOpacity>
+      }} alwaysBounceVertical={false} keyExtractor={(item, index) => {
+        return item.id
+      }}/>
 
-        <TouchableOpacity onPress={() => navigation.navigate('House')}>
-          <House style={styles.house} name='House 2'/>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => navigation.navigate('House')}>
-          <House style={styles.house} name='House 3'/>
-        </TouchableOpacity>
-      </View>
-
-      <Pressable style={styles.addHouseBtn}>
+      {/* ADD HOUSE BUTTON */}
+      <TouchableOpacity style={styles.addHouseBtn} onPress={() => navigation.navigate('AddHouseScreen', {onAdd: addHouse})}>
         <Text style={styles.addHouseBtnText}>Add House</Text>
-      </Pressable>
+      </TouchableOpacity>
     </View>
   );
 }
