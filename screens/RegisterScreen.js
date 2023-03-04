@@ -1,6 +1,6 @@
 import { Pressable, StyleSheet, Text, View, LogBox } from 'react-native';
 
-export default function DeviceScreen({ navigation }) {
+export default function RegisterScreen({ navigation }) {
 
   LogBox.ignoreLogs([
     'Non-serializable values were found in the navigation state',

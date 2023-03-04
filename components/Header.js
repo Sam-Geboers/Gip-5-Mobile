@@ -1,12 +1,17 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Button } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { useNavigation } from '@react-navigation/native';
+import { faGear } from '@fortawesome/free-solid-svg-icons';
 
-export default function Header(props) {
+export default function Header( props ) {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.header}>
       <Text style={styles.user}>Welcome back, {props.username}!</Text>
-      <FontAwesomeIcon style={styles.ellipsis} icon={ faBars } />
+      <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+        <FontAwesomeIcon style={styles.ellipsis} icon={ faGear } />
+      </TouchableOpacity>
     </View>
   );
 }

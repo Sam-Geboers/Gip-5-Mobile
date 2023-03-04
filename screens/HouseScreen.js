@@ -1,13 +1,17 @@
 import React from 'react';
-import { TouchableOpacity, StyleSheet, Text, View, FlatList } from 'react-native';
+import { TouchableOpacity, StyleSheet, Text, View, FlatList, LogBox } from 'react-native';
 import Header from '../components/Header';
-import Room from '../components/Room';
+import Space from '../components/Space';
 
 export default function HouseScreen({ navigation, route }) {
   const [spaceContainer, setSpaceContainer] = React.useState([]);
 
+  LogBox.ignoreLogs([
+    'Non-serializable values were found in the navigation state',
+  ]);
+
   function addSpace(name, desc) {
-    if (name.length == 0 || desc == 0) {
+    if (name.length == 0 || desc.length == 0) {
       Alert.alert('Please enter your space information before pressing submit.')
       return;
     }
@@ -24,15 +28,15 @@ export default function HouseScreen({ navigation, route }) {
 
       {/* HOUSE INFO */}
       <View style={styles.houseHeader}>
-        <Text style={styles.houseTitle}>{route.params.houseName}</Text>
-        <Text style={styles.houseAdr}>{route.params.houseAdr}</Text>
+        <Text style={styles.houseTitle}>{route.params?.houseName}</Text>
+        <Text style={styles.houseAdr}>{route.params?.houseAdr}</Text>
         <View style={styles.linebreak}/>
       </View>
 
       {/* LIST OF ALL SPACES */}
       <FlatList style={styles.spaceContainer} data={spaceContainer} renderItem={(space) => {
         return <TouchableOpacity onPress={() => navigation.navigate('Space', {spaceId: space.item.id, spaceName: space.item.name, spaceDesc: space.item.desc})}>
-                  <Room key={space.item.id} name={space.item.name} desc={space.item.desc}/>
+                  <Space key={space.item.id} name={space.item.name} desc={space.item.desc}/>
                 </TouchableOpacity>
       }} alwaysBounceVertical={false} keyExtractor={(item, index) => {
         return item.id

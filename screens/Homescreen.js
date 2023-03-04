@@ -1,14 +1,18 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { FlatList, StyleSheet, Text, TouchableOpacity, View, Alert } from 'react-native';
+import { FlatList, StyleSheet, Text, TouchableOpacity, View, Alert, LogBox } from 'react-native';
 import Header from '../components/Header';
 import House from '../components/House';
 
-export default function HomeScreen({ route, navigation }) {
+export default function HomeScreen({ navigation }) {
   const [houseContainer, setHouseContainer] = React.useState([]);
 
+  LogBox.ignoreLogs([
+    'Non-serializable values were found in the navigation state',
+  ]);
+
   function addHouse(name, adr) {
-    if (name.length == 0 || adr == 0) {
+    if (name.length == 0 || adr.length == 0) {
       Alert.alert('Please enter your house information before pressing submit.')
       return;
     }

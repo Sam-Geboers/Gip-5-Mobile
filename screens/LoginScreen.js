@@ -1,6 +1,6 @@
 import { Pressable, StyleSheet, Text, View, LogBox } from 'react-native';
 
-export default function DeviceScreen({ navigation }) {
+export default function LoginScreen({ navigation }) {
 
   LogBox.ignoreLogs([
     'Non-serializable values were found in the navigation state',
@@ -15,7 +15,7 @@ export default function DeviceScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#E0E1DD',
+    backgroundColor: '#0D1B2A',
     margin: 0,
     padding: 0,
   },

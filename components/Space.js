@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 
-export default function Room(props) {
+export default function Space(props) {
   return (
       <View style={styles.container}>
         <Text style={styles.title}>{props.name}</Text>
