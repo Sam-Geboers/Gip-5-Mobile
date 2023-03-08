@@ -1,16 +1,20 @@
 import { StyleSheet, Text, View, TouchableOpacity, Button } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useNavigation } from '@react-navigation/native';
-import { faGear } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 
 export default function Header( props ) {
   const navigation = useNavigation();
 
+  function logout() {
+    navigation.navigate('LoginSignup');
+  }
+
   return (
     <View style={styles.header}>
       <Text style={styles.user}>Welcome back, {props.username}!</Text>
-      <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-        <FontAwesomeIcon style={styles.ellipsis} icon={ faGear } />
+      <TouchableOpacity onPress={() => logout()}>
+        <FontAwesomeIcon style={styles.icon} icon={ faArrowRightFromBracket } />
       </TouchableOpacity>
     </View>
   );
@@ -32,9 +36,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     margin: 20,
   },
-  ellipsis: {
+  icon: {
     color: '#fafafa',
     margin: 20,
-    padding: 15
+    padding: 12,
   },
 })

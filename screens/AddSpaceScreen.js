@@ -27,7 +27,7 @@ export default function AddHouseScreen({ navigation, route }) {
 
   return (
     <View style={styles.container}>
-      <Header username='Dylan'/>
+      <Header username={route.params.username}/>
 
       <View style={styles.modalContainer}>
         <View style={styles.modalForm}>

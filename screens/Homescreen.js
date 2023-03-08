@@ -4,7 +4,7 @@ import { FlatList, StyleSheet, Text, TouchableOpacity, View, Alert, LogBox } fro
 import Header from '../components/Header';
 import House from '../components/House';
 
-export default function HomeScreen({ navigation }) {
+export default function HomeScreen({ navigation, route }) {
   const [houseContainer, setHouseContainer] = React.useState([]);
 
   LogBox.ignoreLogs([
@@ -26,11 +26,11 @@ export default function HomeScreen({ navigation }) {
     <View style={styles.container}>
       {/* HEADER */}
       <StatusBar style='light' />
-      <Header username='Dylan'/>
+      <Header username={route.params.username} />
 
       {/* LIST OF ALL HOUSES */}
       <FlatList style={styles.housesContainer} data={houseContainer} renderItem={(house) => {
-        return <TouchableOpacity onPress={() => navigation.navigate('House', {houseId: house.item.id, houseName: house.item.name, houseAdr: house.item.adr})}>
+        return <TouchableOpacity onPress={() => navigation.navigate('House', {houseId: house.item.id, houseName: house.item.name, houseAdr: house.item.adr, username: route.params.username})}>
                   <House key={house.item.id} name={house.item.name} adr={house.item.adr}/>
                 </TouchableOpacity>
       }} alwaysBounceVertical={false} keyExtractor={(item, index) => {
@@ -38,7 +38,7 @@ export default function HomeScreen({ navigation }) {
       }}/>
 
       {/* ADD HOUSE BUTTON */}
-      <TouchableOpacity style={styles.addHouseBtn} onPress={() => navigation.navigate('AddHouseScreen', {onAdd: addHouse})}>
+      <TouchableOpacity style={styles.addHouseBtn} onPress={() => navigation.navigate('AddHouseScreen', {onAdd: addHouse, username: route.params.username})}>
         <Text style={styles.addHouseBtnText}>Add House</Text>
       </TouchableOpacity>
     </View>

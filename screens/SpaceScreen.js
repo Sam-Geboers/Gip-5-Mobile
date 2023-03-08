@@ -24,7 +24,7 @@ export default function HouseScreen({ navigation, route }) {
   return (
     <View style={styles.container}>
       {/* HEADER */}
-      <Header username='Dylan'/>
+      <Header username={route.params.username}/>
 
       {/* HOUSE INFO */}
       <View style={styles.spaceHeader}>
@@ -35,7 +35,7 @@ export default function HouseScreen({ navigation, route }) {
 
       {/* LIST OF ALL DEVICES */}
       <FlatList style={styles.deviceContainer} data={deviceContainer} renderItem={(device) => {
-        return <TouchableOpacity onPress={() => navigation.navigate('Device', {deviceId: device.item.id, deviceName: device.item.name, deviceInfo: device.item.info})}>
+        return <TouchableOpacity onPress={() => navigation.navigate('Device', {deviceId: device.item.id, deviceName: device.item.name, deviceInfo: device.item.info, username: route.params.username})}>
                   <Device key={device.item.id} name={device.item.name} info={device.item.info}/>
                 </TouchableOpacity>
       }} alwaysBounceVertical={false} keyExtractor={(item, index) => {
@@ -47,7 +47,7 @@ export default function HouseScreen({ navigation, route }) {
         <TouchableOpacity style={styles.btn} onPress={() => navigation.goBack()}>
           <Text style={styles.btnText}>Go Back</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('AddDeviceScreen', {onAdd: addDevice})}>
+        <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('AddDeviceScreen', {onAdd: addDevice, username: route.params.username})}>
           <Text style={styles.btnText}>Add Device</Text>
         </TouchableOpacity>
       </View>
