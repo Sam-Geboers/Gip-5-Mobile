@@ -4,7 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 
-export default function LoginSignupScreen({ navigation }) {
+export default function RegisterScreen({ navigation }) {
+  const [username, setUsername] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
@@ -12,7 +13,11 @@ export default function LoginSignupScreen({ navigation }) {
     'Non-serializable values were found in the navigation state',
   ]);
   
-  {/* ADD LOGIN/SIGNUP FUNCTIONS */}
+  {/* ADD REGISTER FUNCTIONS */}
+  function usernameInputHandler(user) {
+    setUsername(user);
+  }
+
   function emailInputHandler(mail) {
     setEmail(mail);
   }
@@ -21,22 +26,27 @@ export default function LoginSignupScreen({ navigation }) {
     setPassword(pass);
   }
 
-  function Authenticate() {
-    if (email == 'Admin' && password == 'admin') {
-      navigation.navigate('Home', {username: email})
-    }
-    setEmail('');
-    setPassword('');
+  function Register() {
+    
   }
 
   return (
     <View style={styles.container}>
-      <View style={styles.loginHeader}>
-        <FontAwesomeIcon style={styles.loginIcon} icon={ faUser } />
-        <Text style={styles.textHeader}>Login & Signup</Text>
+      <View style={styles.registerHeader}>
+        <FontAwesomeIcon style={styles.registerIcon} icon={ faUser } />
+        <Text style={styles.textHeader}>Register</Text>
       </View>
 
-      <View style={styles.loginForm}>
+      <View style={styles.registerForm}>
+      <View style={styles.inputView}>
+          <TextInput
+            style={styles.TextInput}
+            placeholder="Username"
+            value={username}
+            onChangeText={(username) => usernameInputHandler(username)}
+          /> 
+        </View> 
+
         <View style={styles.inputView}>
           <TextInput
             style={styles.TextInput}
@@ -56,8 +66,11 @@ export default function LoginSignupScreen({ navigation }) {
           /> 
         </View>
 
-        <TouchableOpacity style={styles.loginBtn} onPress={() => Authenticate()}>
-          <Text style={styles.loginText}>Login</Text> 
+        <TouchableOpacity style={styles.btn1} onPress={() => Register()}>
+          <Text style={styles.btnText}>Register</Text> 
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.btn2} onPress={() => navigation.goBack()}>
+          <Text style={styles.btnText}>Go back</Text> 
         </TouchableOpacity>
       </View>
     </View>
@@ -69,9 +82,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#0D1B2A',
   },
-  loginForm: {
+  registerForm: {
     flex: 1,
-    marginVertical: 100,
+    marginVertical: 60,
     marginHorizontal: 40,
     paddingBottom: 160,
   },
@@ -86,16 +99,27 @@ const styles = StyleSheet.create({
     backgroundColor: '#fafafa',
     borderRadius: 25,
   },
-  loginBtn: {
+  btn1: {
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 50,
-    height: '15%',
+    height: '18%',
+    width: '100%',
     borderRadius: 50,
     elevation: 3,
     backgroundColor: '#415A77',
   },
-  loginText: {
+  btn2: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 20,
+    height: '18%',
+    width: '100%',
+    borderRadius: 50,
+    elevation: 3,
+    backgroundColor: '#415A77',
+  },
+  btnText: {
     fontSize: 16,
     lineHeight: 21,
     fontWeight: 'bold',
@@ -110,12 +134,12 @@ const styles = StyleSheet.create({
     color: '#fafafa',
     paddingTop: 20,
   },
-  loginHeader: {
+  registerHeader: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  loginIcon: {
+  registerIcon: {
     color: '#fafafa',
     padding: 50,
     margin: 20,

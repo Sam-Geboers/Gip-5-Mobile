@@ -7,7 +7,7 @@ export default function Header( props ) {
   const navigation = useNavigation();
 
   function logout() {
-    navigation.navigate('LoginSignup');
+    navigation.navigate('Login');
   }
 
   return (
