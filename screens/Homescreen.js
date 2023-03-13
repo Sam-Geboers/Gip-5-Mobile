@@ -37,7 +37,7 @@ export default function HomeScreen({ navigation, route }) {
         return item.id
       }}/>
 
-      {/* ADD HOUSE BUTTON */}
+      {/* ADD HOUSE */}
       <TouchableOpacity style={styles.addHouseBtn} onPress={() => navigation.navigate('AddHouseScreen', {onAdd: addHouse, username: route.params.username})}>
         <Text style={styles.addHouseBtnText}>Add House</Text>
       </TouchableOpacity>

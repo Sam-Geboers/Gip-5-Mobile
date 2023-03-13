@@ -1,6 +1,7 @@
 import React from 'react';
 import { TextInput, TouchableOpacity, StyleSheet, Text, View, Alert} from 'react-native';
 import Header from '../components/Header';
+import APIService from '../APIService';
 
 export default function AddHouseScreen({ navigation, route }) {
   const [houseName, setHouseName] = React.useState('');
@@ -18,7 +19,12 @@ export default function AddHouseScreen({ navigation, route }) {
 
   function addHouse() {
     route.params.onAdd(houseName, houseAdr);
-    navigation.setOptions();
+
+    APIService.addHouse(houseName, houseAdr)
+    .catch(err => {
+      console.log('Error while adding house: ', err);
+    })
+
     setHouseName('');
     setHouseAdr('');
 
@@ -53,12 +59,6 @@ export default function AddHouseScreen({ navigation, route }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#E0E1DD',
-    margin: 0,
-    padding: 0,
-  },
-  modal: {
     flex: 1,
     backgroundColor: '#E0E1DD',
     margin: 0,

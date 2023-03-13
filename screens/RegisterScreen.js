@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View, LogBox, TextInput, TouchableOpacity, Text } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
-
+import APIService from '../APIService';
 
 export default function RegisterScreen({ navigation }) {
   const [username, setUsername] = React.useState('');
@@ -27,7 +27,11 @@ export default function RegisterScreen({ navigation }) {
   }
 
   function Register() {
-    
+    APIService.addUser(username, email, password)
+    .catch(err => {
+      console.log('Error while adding user: ', err);
+    })
+    .finally(navigation.navigate('Login'))
   }
 
   return (
@@ -95,7 +99,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   TextInput: {
-    padding: 16,
+    padding: 15,
     backgroundColor: '#fafafa',
     borderRadius: 25,
   },
