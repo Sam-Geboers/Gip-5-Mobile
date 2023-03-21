@@ -1,5 +1,7 @@
 import React from 'react';
-import { TouchableOpacity, StyleSheet, Text, View, FlatList, LogBox } from 'react-native';
+import { TouchableOpacity, StyleSheet, Text, View, FlatList, LogBox, Alert } from 'react-native';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faHome } from '@fortawesome/free-solid-svg-icons';
 import Header from '../components/Header';
 import Space from '../components/Space';
 
@@ -11,11 +13,6 @@ export default function HouseScreen({ navigation, route }) {
   ]);
 
   function addSpace(name, desc) {
-    if (name.length == 0 || desc.length == 0) {
-      Alert.alert('Please enter your space information before pressing submit.')
-      return;
-    }
-
     let id = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
 
     setSpaceContainer((currentSpaceContainer) => [...currentSpaceContainer, {id, name, desc}]);
@@ -24,18 +21,28 @@ export default function HouseScreen({ navigation, route }) {
   return (
     <View style={styles.container}>
       {/* HEADER */}
-      <Header username={route.params.username}/>
+      <Header />
 
       {/* HOUSE INFO */}
       <View style={styles.houseHeader}>
-        <Text style={styles.houseTitle}>{route.params?.houseName}</Text>
-        <Text style={styles.houseAdr}>{route.params?.houseAdr}</Text>
+        <View style={styles.houseData}>
+          <FontAwesomeIcon icon={faHome} style={{marginHorizontal: 25, padding: 15}}/>
+          <View>
+            <Text style={styles.houseTitle}>{route.params?.houseName}</Text>
+            <Text style={styles.houseAdr}>{route.params?.houseAdr}</Text>
+          </View>
+        </View>
         <View style={styles.linebreak}/>
       </View>
 
+      {/* TEMPLATE SPACE */}
+      <TouchableOpacity onPress={() => navigation.navigate('Space', {spaceId: 0, spaceName: 'Space 1', spaceDesc: 'Bedroom'})}>
+        <Space key={0} name='Space 1' desc='Bedroom'/>
+      </TouchableOpacity>
+
       {/* LIST OF ALL SPACES */}
       <FlatList style={styles.spaceContainer} data={spaceContainer} renderItem={(space) => {
-        return <TouchableOpacity onPress={() => navigation.navigate('Space', {spaceId: space.item.id, spaceName: space.item.name, spaceDesc: space.item.desc, username: route.params.username})}>
+        return <TouchableOpacity onPress={() => navigation.navigate('Space', {spaceId: space.item.id, spaceName: space.item.name, spaceDesc: space.item.desc})}>
                   <Space key={space.item.id} name={space.item.name} desc={space.item.desc}/>
                 </TouchableOpacity>
       }} alwaysBounceVertical={false} keyExtractor={(item, index) => {
@@ -47,7 +54,7 @@ export default function HouseScreen({ navigation, route }) {
         <TouchableOpacity style={styles.btn} onPress={() => navigation.goBack()}>
           <Text style={styles.btnText}>Go Back</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('AddSpaceScreen', {onAdd: addSpace, username: route.params.username})}>
+        <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('AddSpaceScreen', {onAdd: addSpace})}>
           <Text style={styles.btnText}>Add Space</Text>
         </TouchableOpacity>
       </View>
@@ -70,21 +77,24 @@ const styles = StyleSheet.create({
   houseHeader: {
     flex: 1,
     maxHeight: 80,
-    justifyContent: 'center',
     alignItems: 'center',
+  },
+  houseData: {
+    flex: 1,
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
   },
   houseTitle: {
     flex: 1,
     fontSize: 34,
     fontWeight: 'bold',
     letterSpacing: 0.25,
-    textAlign: 'center',
-    marginTop: 8,
   },
   houseAdr: {
     flex: 1,
     fontSize: 18,
-    textAlign: 'center',
   },
   btn: {
     alignItems: 'center',
@@ -115,5 +125,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     top: 15,
     maxHeight: 165,
+    shadowColor: "#000000",
+    shadowOffset: {width: 0, height: 3},
+    shadowOpacity: 0.7,
+    shadowRadius: 4,
   },
 });

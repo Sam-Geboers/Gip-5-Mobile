@@ -9,7 +9,7 @@ export default function Header( props ) {
 
   return (
     <View style={styles.header}>
-      <Text style={styles.user}>Welcome back, {props.username}!</Text>
+      <Text style={styles.user}>Smart Home Dashboard!</Text>
       <TouchableOpacity onPress={() => navigation.navigate('Login')}>
         <FontAwesomeIcon style={styles.icon} icon={ faArrowRightFromBracket } />
       </TouchableOpacity>
@@ -24,8 +24,15 @@ const styles = StyleSheet.create({
     minWidth: '100%',
     alignItems: 'center',
     justifyContent: 'space-between',
+    marginBottom: 10,
     paddingTop: 50,
     paddingBottom: 10,
+    borderBottomLeftRadius: 25,
+    borderBottomRightRadius: 25,
+    shadowColor: "#000000",
+    shadowOffset: {width: 0, height: 3},
+    shadowOpacity: 0.7,
+    shadowRadius: 4,
   },
   user: {
     color: '#fafafa',

@@ -2,7 +2,7 @@ import React from 'react';
 import { TextInput, TouchableOpacity, StyleSheet, Text, View, Alert} from 'react-native';
 import Header from '../components/Header';
 
-export default function AddHouseScreen({ navigation, route }) {
+export default function AddSpaceScreen({ navigation, route }) {
   const [spaceName, setSpaceName] = React.useState('');
   const [spaceDesc, setSpaceDesc] = React.useState('');
 
@@ -17,8 +17,13 @@ export default function AddHouseScreen({ navigation, route }) {
   }
 
   function addSpace() {
+    if (spaceName.length == 0 || spaceDesc.length == 0) {
+      Alert.alert('Please enter your space information before pressing submit.')
+      return;
+    }
+
     route.params.onAdd(spaceName, spaceDesc);
-    navigation.setOptions();
+
     setSpaceName('');
     setSpaceDesc('');
 
@@ -27,7 +32,7 @@ export default function AddHouseScreen({ navigation, route }) {
 
   return (
     <View style={styles.container}>
-      <Header username={route.params.username}/>
+      <Header />
 
       <View style={styles.modalContainer}>
         <View style={styles.modalForm}>
@@ -86,6 +91,10 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     elevation: 3,
     backgroundColor: '#415A77',
+    shadowColor: "#000000",
+    shadowOffset: {width: 0, height: 3},
+    shadowOpacity: 0.7,
+    shadowRadius: 4,
   },
   btnText: {
     fontSize: 16,
@@ -113,8 +122,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderRadius: 25,
     borderStyle: 'solid',
-    borderWidth: 2,
-    borderColor: '#1B263B',
+    borderWidth: 1,
     backgroundColor: '#fafafa',
+    shadowColor: "#000000",
+    shadowOffset: {width: 0, height: 3},
+    shadowOpacity: 0.7,
+    shadowRadius: 4,
   },
 });

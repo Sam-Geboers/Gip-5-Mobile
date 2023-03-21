@@ -1,10 +1,8 @@
 import React from 'react';
-import { StyleSheet, View, LogBox, TextInput, TouchableOpacity, Text } from 'react-native';
+import { StyleSheet, View, LogBox, TextInput, TouchableOpacity, Text, Alert } from 'react-native';
 import CheckBox from 'expo-checkbox';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
-import APIService from '../APIService';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function RegisterScreen({ navigation }) {
   const [username, setUsername] = React.useState('');
@@ -12,24 +10,6 @@ export default function RegisterScreen({ navigation }) {
   const [password, setPassword] = React.useState('');
   const [isRoleUser, setRoleUser] = React.useState(false);
   const [isRoleAdmin, setRoleAdmin] = React.useState(false);
-
-  const storeData = async (data) => {
-    try {
-      const jsonData = JSON.stringify(data)
-      await AsyncStorage.setItem('@userData', jsonData)
-    } catch (e) {
-      console.log('Error while storing data to local storage:', e);
-    }
-  }
-
-  const getData = async () => {
-    try {
-      const jsonValue = await AsyncStorage.getItem('@userData')
-      return jsonValue != null ? JSON.parse(jsonValue) : null;
-    } catch(e) {
-      console.log('Error while retrieving data from local storage:', e);
-    }
-  }
 
   LogBox.ignoreLogs([
     'Non-serializable values were found in the navigation state',
@@ -47,30 +27,27 @@ export default function RegisterScreen({ navigation }) {
   function passwordInputHandler(pass) {
     setPassword(pass);
   }
-  
-  function Register() {
-    let role = 'ADMIN'
 
-    if (isRoleUser) {
-      role = 'USER'
+  function validateEmail(mail) {
+    let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+    
+    if (reg.test(mail) === true) {
+      return mail
+    } else {
+      Alert.alert('Invalid email format')
     }
+  };
 
-    APIService.addUser(username, email, password, role)
-    .catch(err => {
-      console.log('Error while adding user: ', err);
-    })
-    .finally(() => {
-      let user = {
-        uname: username,
-        mail: email,
-        rl: role
-      }
+  function registerHandler() {
+    if (validateEmail(email) && username.length !== 0 && password.length !== 0) {
+      Register();
+    } else {
+      Alert.alert('Please provide all asked information.')
+    }
+  }
 
-      storeData(user);
-      console.log(getData());
-
-      navigation.navigate('Login')
-    })
+  function Register() {
+    navigation.navigate('Login')
   }
 
   return (
@@ -129,7 +106,7 @@ export default function RegisterScreen({ navigation }) {
           </View>
         </View>
         
-        <TouchableOpacity style={styles.btn1} onPress={() => Register()}>
+        <TouchableOpacity style={styles.btn1} onPress={() => registerHandler()}>
           <Text style={styles.btnText}>Register</Text> 
         </TouchableOpacity>
         <TouchableOpacity style={styles.btn2} onPress={() => navigation.goBack()}>
@@ -166,6 +143,10 @@ const styles = StyleSheet.create({
   checkbox: {
     padding: 15,
     color: '#415A77',
+    shadowColor: "#000000",
+    shadowOffset: {width: 0, height: 3},
+    shadowOpacity: 0.7,
+    shadowRadius: 4,
   },
   checkboxText: {
     color: '#fafafa',
@@ -179,6 +160,10 @@ const styles = StyleSheet.create({
     padding: 15,
     backgroundColor: '#fafafa',
     borderRadius: 25,
+    shadowColor: "#000000",
+    shadowOffset: {width: 0, height: 3},
+    shadowOpacity: 0.7,
+    shadowRadius: 4,
   },
   btn1: {
     alignItems: 'center',
@@ -189,6 +174,10 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     elevation: 3,
     backgroundColor: '#415A77',
+    shadowColor: "#000000",
+    shadowOffset: {width: 0, height: 3},
+    shadowOpacity: 0.7,
+    shadowRadius: 4,
   },
   btn2: {
     alignItems: 'center',
@@ -199,6 +188,10 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     elevation: 3,
     backgroundColor: '#415A77',
+    shadowColor: "#000000",
+    shadowOffset: {width: 0, height: 3},
+    shadowOpacity: 0.7,
+    shadowRadius: 4,
   },
   btnText: {
     fontSize: 16,

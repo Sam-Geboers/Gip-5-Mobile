@@ -1,7 +1,6 @@
 import React from 'react';
 import { TextInput, TouchableOpacity, StyleSheet, Text, View, Alert} from 'react-native';
 import Header from '../components/Header';
-import APIService from '../APIService';
 
 export default function AddHouseScreen({ navigation, route }) {
   const [houseName, setHouseName] = React.useState('');
@@ -18,12 +17,12 @@ export default function AddHouseScreen({ navigation, route }) {
   }
 
   function addHouse() {
-    route.params.onAdd(houseName, houseAdr);
+    if (houseName.length == 0 || houseAdr.length == 0) {
+      Alert.alert('Please enter your house information before pressing submit.')
+      return;
+    }
 
-    APIService.addHouse(houseName, houseAdr)
-    .catch(err => {
-      console.log('Error while adding house: ', err);
-    })
+    route.params.onAdd(houseName, houseAdr);
 
     setHouseName('');
     setHouseAdr('');
@@ -33,7 +32,7 @@ export default function AddHouseScreen({ navigation, route }) {
 
   return (
     <View style={styles.container}>
-      <Header username={route.params.username}/>
+      <Header />
 
       <View style={styles.modalContainer}>
         <View style={styles.modalForm}>
@@ -86,6 +85,10 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     elevation: 3,
     backgroundColor: '#415A77',
+    shadowColor: "#000000",
+    shadowOffset: {width: 0, height: 3},
+    shadowOpacity: 0.7,
+    shadowRadius: 4,
   },
   btnText: {
     fontSize: 16,
@@ -113,8 +116,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderRadius: 25,
     borderStyle: 'solid',
-    borderWidth: 2,
-    borderColor: '#1B263B',
+    borderWidth: 1,
     backgroundColor: '#fafafa',
+    shadowColor: "#000000",
+    shadowOffset: {width: 0, height: 3},
+    shadowOpacity: 0.7,
+    shadowRadius: 4,
   },
 });

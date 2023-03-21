@@ -37,7 +37,7 @@ export default function LoginScreen({ navigation }) {
   };
 
   function authenticate() {
-    if (email == 'Admin@gmail.com' && password == 'admin') {
+    if (email == 'Admin@gmail.com' && password == 'admin' || email == 'User@gmail.com' && password == 'user') {
       navigation.navigate('Home')
     } else {
       Alert.alert('Incorrect email or password, try again!')
@@ -105,6 +105,10 @@ const styles = StyleSheet.create({
     padding: 15,
     backgroundColor: '#fafafa',
     borderRadius: 25,
+    shadowColor: "#000000",
+    shadowOffset: {width: 0, height: 3},
+    shadowOpacity: 0.7,
+    shadowRadius: 4,
   },
   loginBtn: {
     alignItems: 'center',
@@ -114,6 +118,10 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     elevation: 3,
     backgroundColor: '#415A77',
+    shadowColor: "#000000",
+    shadowOffset: {width: 0, height: 3},
+    shadowOpacity: 0.7,
+    shadowRadius: 4,
   },
   loginText: {
     fontSize: 16,

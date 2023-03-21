@@ -4,7 +4,7 @@ import Header from '../components/Header';
 
 export default function AddDeviceScreen({ navigation, route }) {
   const [deviceName, setDeviceName] = React.useState('');
-  const [deviceInfo, setDeviceInfo] = React.useState([]);
+  const [deviceDesc, setDeviceDesc] = React.useState('');
 
 
   {/* ADD DEVICE FUNCTIONS */}
@@ -12,30 +12,35 @@ export default function AddDeviceScreen({ navigation, route }) {
     setDeviceName(name);
   }
 
-  function deviceInfoInputHandler(info) {
-    setDeviceInfo(info);
+  function deviceDescInputHandler(desc) {
+    setDeviceDesc(desc);
   }
 
   function addDevice() {
-    route.params.onAdd(deviceName, deviceInfo);
-    navigation.setOptions();
+    if (deviceName.length == 0 || deviceDesc.length == 0) {
+      Alert.alert('Please enter your device information before pressing submit.')
+      return;
+    }
+
+    route.params.onAdd(deviceName, deviceDesc);
+
     setDeviceName('');
-    setDeviceInfo([]);
+    setDeviceDesc('');
 
     navigation.goBack();
   }
 
   return (
     <View style={styles.container}>
-      <Header username={route.params.username}/>
+      <Header />
 
       <View style={styles.modalContainer}>
         <View style={styles.modalForm}>
           <Text style={styles.modalText}>Device name:</Text>
           <TextInput style={styles.modalTextInput} placeholder='Device name...' onChangeText={(text) => deviceNameInputHandler(text)}></TextInput>
 
-          <Text style={styles.modalText}>Device info:</Text>
-          <TextInput style={styles.modalTextInput} maxLength={40} placeholder='Device info...' onChangeText={(text) => deviceInfoInputHandler(text)}></TextInput>
+          <Text style={styles.modalText}>Device description:</Text>
+          <TextInput style={styles.modalTextInput} maxLength={40} placeholder='Device desc...' onChangeText={(text) => deviceDescInputHandler(text)}></TextInput>
         </View>
 
         <View style={styles.modalButtons}>
@@ -86,6 +91,10 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     elevation: 3,
     backgroundColor: '#415A77',
+    shadowColor: "#000000",
+    shadowOffset: {width: 0, height: 3},
+    shadowOpacity: 0.7,
+    shadowRadius: 4,
   },
   btnText: {
     fontSize: 16,
@@ -113,8 +122,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderRadius: 25,
     borderStyle: 'solid',
-    borderWidth: 2,
-    borderColor: '#1B263B',
+    borderWidth: 1,
     backgroundColor: '#fafafa',
+    shadowColor: "#000000",
+    shadowOffset: {width: 0, height: 3},
+    shadowOpacity: 0.7,
+    shadowRadius: 4,
   },
 });

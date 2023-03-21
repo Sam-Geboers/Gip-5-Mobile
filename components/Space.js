@@ -18,6 +18,10 @@ const styles = StyleSheet.create({
     flexBasis: 100,
     margin: 10,
     borderRadius: '25',
+    shadowColor: "#000000",
+    shadowOffset: {width: 0, height: 3},
+    shadowOpacity: 0.7,
+    shadowRadius: 4,
   },
   title: {
     color: '#fafafa',
