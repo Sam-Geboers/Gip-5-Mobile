@@ -1,4 +1,5 @@
-import { StyleSheet, Text, View, TouchableOpacity, Button } from 'react-native';
+import React from 'react';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useNavigation } from '@react-navigation/native';
 import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
@@ -6,14 +7,10 @@ import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 export default function Header( props ) {
   const navigation = useNavigation();
 
-  function logout() {
-    navigation.navigate('Login');
-  }
-
   return (
     <View style={styles.header}>
       <Text style={styles.user}>Welcome back, {props.username}!</Text>
-      <TouchableOpacity onPress={() => logout()}>
+      <TouchableOpacity onPress={() => navigation.navigate('Login')}>
         <FontAwesomeIcon style={styles.icon} icon={ faArrowRightFromBracket } />
       </TouchableOpacity>
     </View>

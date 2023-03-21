@@ -1,12 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View, LogBox, TextInput, TouchableOpacity, Text, Alert } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 
-
 export default function LoginScreen({ navigation }) {
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   LogBox.ignoreLogs([
     'Non-serializable values were found in the navigation state',
@@ -39,10 +38,11 @@ export default function LoginScreen({ navigation }) {
 
   function authenticate() {
     if (email == 'Admin@gmail.com' && password == 'admin') {
-      navigation.navigate('Home', {username: 'Admin'})
+      navigation.navigate('Home')
     } else {
       Alert.alert('Incorrect email or password, try again!')
     }
+
     setEmail('');
     setPassword('');
   }
@@ -53,7 +53,6 @@ export default function LoginScreen({ navigation }) {
         <FontAwesomeIcon style={styles.loginIcon} icon={ faUser } />
         <Text style={styles.textHeader}>Login</Text>
       </View>
-
       <View style={styles.loginForm}>
         <View style={styles.inputView}>
           <TextInput

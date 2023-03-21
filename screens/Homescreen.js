@@ -26,7 +26,7 @@ export default function HomeScreen({ navigation, route }) {
     <View style={styles.container}>
       {/* HEADER */}
       <StatusBar style='light' />
-      <Header username={route.params.username} />
+      <Header />
 
       {/* LIST OF ALL HOUSES */}
       <FlatList style={styles.housesContainer} data={houseContainer} renderItem={(house) => {

@@ -1,13 +1,35 @@
 import React from 'react';
 import { StyleSheet, View, LogBox, TextInput, TouchableOpacity, Text } from 'react-native';
+import CheckBox from 'expo-checkbox';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import APIService from '../APIService';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function RegisterScreen({ navigation }) {
   const [username, setUsername] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const [isRoleUser, setRoleUser] = React.useState(false);
+  const [isRoleAdmin, setRoleAdmin] = React.useState(false);
+
+  const storeData = async (data) => {
+    try {
+      const jsonData = JSON.stringify(data)
+      await AsyncStorage.setItem('@userData', jsonData)
+    } catch (e) {
+      console.log('Error while storing data to local storage:', e);
+    }
+  }
+
+  const getData = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('@userData')
+      return jsonValue != null ? JSON.parse(jsonValue) : null;
+    } catch(e) {
+      console.log('Error while retrieving data from local storage:', e);
+    }
+  }
 
   LogBox.ignoreLogs([
     'Non-serializable values were found in the navigation state',
@@ -25,13 +47,30 @@ export default function RegisterScreen({ navigation }) {
   function passwordInputHandler(pass) {
     setPassword(pass);
   }
-
+  
   function Register() {
-    APIService.addUser(username, email, password)
+    let role = 'ADMIN'
+
+    if (isRoleUser) {
+      role = 'USER'
+    }
+
+    APIService.addUser(username, email, password, role)
     .catch(err => {
       console.log('Error while adding user: ', err);
     })
-    .finally(navigation.navigate('Login'))
+    .finally(() => {
+      let user = {
+        uname: username,
+        mail: email,
+        rl: role
+      }
+
+      storeData(user);
+      console.log(getData());
+
+      navigation.navigate('Login')
+    })
   }
 
   return (
@@ -70,6 +109,26 @@ export default function RegisterScreen({ navigation }) {
           /> 
         </View>
 
+        <View style={styles.checkboxView}>
+          <View style={styles.checkboxPart}>
+            <CheckBox
+              value={isRoleUser}
+              onValueChange={setRoleUser}
+              style={styles.checkbox}
+            />
+            <Text style={styles.checkboxText}>User</Text>
+          </View>
+          
+          <View style={styles.checkboxPart}>
+            <CheckBox
+              value={isRoleAdmin}
+              onValueChange={setRoleAdmin}
+              style={styles.checkbox}
+            />
+            <Text style={styles.checkboxText}>Admin</Text>
+          </View>
+        </View>
+        
         <TouchableOpacity style={styles.btn1} onPress={() => Register()}>
           <Text style={styles.btnText}>Register</Text> 
         </TouchableOpacity>
@@ -97,6 +156,24 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     height: 45,
     marginBottom: 20,
+  },
+  checkboxView: {
+    height: 45,
+    marginBottom: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  checkbox: {
+    padding: 15,
+    color: '#415A77',
+  },
+  checkboxText: {
+    color: '#fafafa',
+    fontSize: 24,
+    marginLeft: 10,
+  },
+  checkboxPart: {
+    flexDirection: 'row',
   },
   TextInput: {
     padding: 15,

@@ -3,7 +3,7 @@ const HOUSE_REST_API = 'http://192.168.0.105:8080/houses';
 
 class APIService {   
   /* USER ENDPOINTS */
-  addUser(uname, mail, pass) {
+  addUser(uname, mail, pass, rl) {
     return fetch(USER_REST_API + '/add-user', { 
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -11,7 +11,7 @@ class APIService {
         username: uname,
         email: mail,
         password: pass,
-        role: 'USER'
+        role: rl,
       })
     })
     .then(res => res.json());
@@ -23,8 +23,8 @@ class APIService {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        name: hname,
-        address: hadress
+        address: hadress,
+        name: hname
       })
     })
     .then(res => res.json());
